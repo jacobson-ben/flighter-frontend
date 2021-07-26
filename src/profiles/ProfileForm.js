@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import Alert from "../common/Alert";
-import FlighterApi from "../FlighterApi";
+import FlighterApi from "../api/UserApi";
 import UserContext from "../auth/UserContext";
 
 // eslint-disable-next-line

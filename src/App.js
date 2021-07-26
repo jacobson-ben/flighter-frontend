@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 import NavBar from "./routes-nav/Navbar";
 import LoadingSpinner from "./common/LoadingSpinner";
 import UserContext from "./auth/UserContext";
-import FlighterApi from './FlighterApi';
+import FlighterApi from './api/UserApi';
 import { useState, useEffect } from 'react';
 import jwt from "jsonwebtoken";
 import 'bootstrap/dist/css/bootstrap.min.css';
