@@ -1,0 +1,10 @@
+.Homepage {
+  /* put around the vertical center of page */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  background: url('../static/airplane-img.jpeg');
+  background-size: 100%;
+}
+
+
