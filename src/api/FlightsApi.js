@@ -1,6 +1,7 @@
 import axios from "axios";
-
 const CancelToken = axios.CancelToken;
+
+const BASE_URL = process.env.REACT_APP_BASE_URL || "http://localhost:3001";
 
 // This function allow you to make GET request to backend with params we need
 export const getAmadeusData = params => {
@@ -19,7 +20,7 @@ export const getAmadeusData = params => {
 
   // GET request with all params we need
   const out = axios.get(
-    `/api/airports/?keyword=${searchQuery}&page=${page}&subType=${subTypeCheck}`,
+    `${BASE_URL}/flights/api/airports/?keyword=${searchQuery}&page=${page}&subType=${subTypeCheck}`,
     {
       cancelToken: source.token
     }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
@@ -8,6 +8,14 @@ import PrivateRoute from "./PrivateRoute";
 import SearchForm from "../search/SearchFrom";
 
 function Routes({ login, signup }) {
+
+  const [search, setSearch] = useState({
+    keyword: "a",
+    city: true,
+    airport: true,
+    page: 0
+  });
+
   return (
     <div>
       <Switch>
@@ -28,7 +36,7 @@ function Routes({ login, signup }) {
         </PrivateRoute>
 
         <PrivateRoute path="/flights">
-          <SearchForm />
+          <SearchForm search={search} setSearch={setSearch}/>
         </PrivateRoute>
 
       </Switch>
