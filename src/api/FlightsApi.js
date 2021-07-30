@@ -26,5 +26,7 @@ export const getAmadeusData = params => {
     }
   )
 
+  const flightOffers = axios.get(`${BASE_URL}/`)
+
   return { out, source }
 };

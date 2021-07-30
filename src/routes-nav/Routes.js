@@ -5,16 +5,9 @@ import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import ProfileForm from "../profiles/ProfileForm";
 import PrivateRoute from "./PrivateRoute";
-import SearchForm from "../search/SearchFrom";
+import SearchForm from "../search/SearchForm";
 
 function Routes({ login, signup }) {
-
-  const [search, setSearch] = useState({
-    keyword: "a",
-    city: true,
-    airport: true,
-    page: 0
-  });
 
   return (
     <div>
@@ -36,7 +29,7 @@ function Routes({ login, signup }) {
         </PrivateRoute>
 
         <PrivateRoute path="/flights">
-          <SearchForm search={search} setSearch={setSearch}/>
+          <SearchForm />
         </PrivateRoute>
 
       </Switch>
