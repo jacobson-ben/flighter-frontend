@@ -32,8 +32,8 @@ class AmadeusApi {
 
   // GET flight offers
   static async getFlightOffers(searchFormData) {
-    console.log('method activated')
     const out = await axios.post(`${BASE_URL}/flights/api/flight-offers/`, searchFormData)
+    return out
   }
 
   // const flightOffers = axios.get(`${BASE_URL}/`)

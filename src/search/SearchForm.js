@@ -3,19 +3,21 @@ import AutocompleteInput from './AutocompleteInput'
 import SearchTermContext from "../context/SearchTermContext";
 import AmadeusApi from "../api/AmadeusApi"
 
+const initialState = {
+  tripType: "roundtrip",
+  origin: "",
+  destination: "",
+  adults: 1,
+  children: 0,
+  departureDate: new Date().toDateString(),
+  returnDate: "",
+  cabin: "economy",
+  nonStop: false,
+}
 
 function SearchForm(props) {
   const now = new Date();
-  const [formData, setFormData] = useState({
-    tripType: "roundtrip",
-    origin: "",
-    destination: "",
-    adult: 1,
-    children: 0,
-    departureDate: now.toDateString(),
-    returnDate: "",
-    cabin: "economy"
-  });
+  const [formData, setFormData] = useState(initialState);
   const { search, setSearch } = useContext(SearchTermContext); 
  
    /** Handle form submit:
@@ -27,30 +29,37 @@ function SearchForm(props) {
       evt.preventDefault();
       console.log('SUBMITTED')
       const baseSearchApiObject = {}
-      const {origin, destination, adult, children, cabin, departureDate, returnDate} = formData
+      const {origin, destination, adults, children, cabin, departureDate, returnDate, nonStop} = formData
 
       baseSearchApiObject.originLocationCode = origin; 
       baseSearchApiObject.destinationLocationCode = destination;
       baseSearchApiObject.departureDate = departureDate; 
-      baseSearchApiObject.travelClass = cabin; 
+      baseSearchApiObject.nonStop = nonStop; 
+      baseSearchApiObject.currencyCode = "USD"; 
+      baseSearchApiObject.travelClass = cabin.toUpperCase(); 
       
       //todo: baseSearchApiObject.returnDate = returnDate || '' ???
       if(returnDate) baseSearchApiObject.returnDate = returnDate;
-      if(adult) baseSearchApiObject.adult = adult;
+      if(adults) baseSearchApiObject.adults = adults;
       if(children) baseSearchApiObject.children = children;
-      
-      console.log(baseSearchApiObject)
       
       setSearch(baseSearchApiObject);
       // api query.
-      AmadeusApi.getFlightOffers(baseSearchApiObject);
+      let response = await AmadeusApi.getFlightOffers(baseSearchApiObject);
       // reset to initial 
+      console.log(response)
+      setFormData(initialState);
     }
     
   /** Update form data field */
   function handleChange(evt) {
-    const { name, value } = evt.target;
-    setFormData(l => ({ ...l, [name]: value }));
+    const { name, value, checked } = evt.target;
+    if(name === "nonStop") {
+      setFormData(l => ({...l, [name]: checked}))
+    }
+    else {
+      setFormData(l => ({ ...l, [name]: value }));
+    }
   }
     
   return (
@@ -76,9 +85,9 @@ function SearchForm(props) {
                   <input
                       type="number"
                       step="1"
-                      name="adult"
+                      name="adults"
                       className="form-control"
-                      value={formData.adult}
+                      value={formData.adults}
                       onChange={handleChange}
                       required
                   />
@@ -139,6 +148,14 @@ function SearchForm(props) {
                   <option value="business">Business</option>
                   <option value="first">First Class</option>
                 </select>
+                <label>Nonstop</label>
+                <input
+                    type="checkbox"
+                    name="nonStop"
+                    className="form-control"
+                    value={formData.nonStop}
+                    onChange={handleChange}
+                ></input>
               </div>
               <button
                   className="btn btn-primary float-right"
