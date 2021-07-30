@@ -20,19 +20,19 @@ function App() {
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [search, setSearch] = useState({})
 
-  console.debug(
-      "App",
-      "infoLoaded=", infoLoaded,
-      "currentUser=", currentUser,
-      "token=", token,
-  );
+  // console.debug(
+  //     "App",
+  //     "infoLoaded=", infoLoaded,
+  //     "currentUser=", currentUser,
+  //     "token=", token,
+  // );
 
   // Load user info from API. Until a user is logged in and they have a token,
   // this should not run. It only needs to re-run when a user logs out, so
   // the value of the token is a dependency for this effect.
 
   useEffect(function loadUserInfo() {
-    console.debug("App useEffect loadUserInfo", "token=", token);
+    // ("App useEffect loadUserInfo", "token=", token);
 
     async function getCurrentUser() {
       if (token) {

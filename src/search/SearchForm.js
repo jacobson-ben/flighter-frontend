@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AutocompleteInput from './AutocompleteInput'
-import { useHistory } from "react-router-dom";
-import Alert from "../common/Alert";
 import SearchTermContext from "../context/SearchTermContext";
+import AmadeusApi from "../api/AmadeusApi"
 
 
 function SearchForm(props) {
-  const now = new Date
+  const now = new Date();
   const [formData, setFormData] = useState({
     tripType: "roundtrip",
     origin: "",
@@ -17,12 +16,6 @@ function SearchForm(props) {
     returnDate: "",
     cabin: "economy"
   });
-  const [search, setSearch] = useState({
-    keyword: "a",
-    city: true,
-    airport: true,
-    page: 0
-  });
   const { search, setSearch } = useContext(SearchTermContext); 
  
    /** Handle form submit:
@@ -32,24 +25,34 @@ function SearchForm(props) {
 
     async function handleSubmit(evt) {
       evt.preventDefault();
+      console.log('SUBMITTED')
       const baseSearchApiObject = {}
       const {origin, destination, adult, children, cabin, departureDate, returnDate} = formData
+
       baseSearchApiObject.originLocationCode = origin; 
-      baseSearchApiObject.destinationLocationCode = destination, 
+      baseSearchApiObject.destinationLocationCode = destination;
       baseSearchApiObject.departureDate = departureDate; 
       baseSearchApiObject.travelClass = cabin; 
+      
+      //todo: baseSearchApiObject.returnDate = returnDate || '' ???
       if(returnDate) baseSearchApiObject.returnDate = returnDate;
       if(adult) baseSearchApiObject.adult = adult;
       if(children) baseSearchApiObject.children = children;
+      
+      console.log(baseSearchApiObject)
+      
       setSearch(baseSearchApiObject);
+      // api query.
+      AmadeusApi.getFlightOffers(baseSearchApiObject);
+      // reset to initial 
     }
-  
-    /** Update form data field */
-    function handleChange(evt) {
-      const { name, value } = evt.target;
-      setFormData(l => ({ ...l, [name]: value }));
-    }
-  
+    
+  /** Update form data field */
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setFormData(l => ({ ...l, [name]: value }));
+  }
+    
   return (
     <div className="SearchForm">
       <div className="container col-md-6 offset-md-3 col-lg-4 offset-lg-4">
@@ -90,9 +93,18 @@ function SearchForm(props) {
                       required
                   />
                   <label>Origin</label>
-                    <AutocompleteInput search={search} setSearch={setSearch}/>  
+                  <AutocompleteInput 
+                    label="origin"
+                    formData={formData} 
+                    setFormData={setFormData}
+                    required
+                  />  
                   <label>Destination</label>
-                    <AutocompleteInput search={search} setSearch={setSearch}/>  
+                  <AutocompleteInput 
+                    label="destination"
+                    formData={formData} 
+                    setFormData={setFormData}
+                  />  
                   <label>Depart Date</label>
                   <input
                       type="date"
@@ -112,7 +124,6 @@ function SearchForm(props) {
                       className="form-control"
                       value={formData.returnDate}
                       onChange={handleChange}
-                      required
                   />
                 }
                 <label>Cabin Type</label>

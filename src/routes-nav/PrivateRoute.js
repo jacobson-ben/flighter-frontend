@@ -12,12 +12,12 @@ import UserContext from "../context/UserContext";
 function PrivateRoute({ exact, path, children }) {
   const { currentUser } = useContext(UserContext);
 
-  console.debug(
-      "PrivateRoute",
-      "exact=", exact,
-      "path=", path,
-      "currentUser=", currentUser,
-  );
+  // console.debug(
+  //     "PrivateRoute",
+  //     "exact=", exact,
+  //     "path=", path,
+  //     "currentUser=", currentUser,
+  // );
 
   if (!currentUser) {
     return <Redirect to="/login" />;

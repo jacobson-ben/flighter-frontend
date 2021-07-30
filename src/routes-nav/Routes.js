@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 import Homepage from "../homepage/Homepage";
 import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
