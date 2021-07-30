@@ -4,11 +4,12 @@ import useLocalStorage from "./hooks/useLocalStorage";
 import { BrowserRouter } from 'react-router-dom';
 import NavBar from "./routes-nav/Navbar";
 import LoadingSpinner from "./common/LoadingSpinner";
-import UserContext from "./auth/UserContext";
+import UserContext from "./context/UserContext";
 import FlighterApi from './api/UserApi';
 import { useState, useEffect } from 'react';
 import jwt from "jsonwebtoken";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import SearchTermContext from './context/SearchTermContext';
 
 // Key name for storing token in localStorage for "remember me" re-login
 export const TOKEN_STORAGE_ID = "jobly-token";
@@ -17,7 +18,7 @@ function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
-  const [currentSearch, setCurrentSearch] = useState({})
+  const [search, setSearch] = useState({})
 
   console.debug(
       "App",
@@ -99,10 +100,12 @@ function App() {
   return (
     <BrowserRouter>
       <UserContext.Provider value={{ currentUser, setCurrentUser }}>
+      <SearchTermContext.Provider value={{search, setSearch}}>
       <div className="App">
         <NavBar logout={logout}/>
         <Routes login={login} signup={signup} />
       </div>
+      </SearchTermContext.Provider>
       </UserContext.Provider>
     </BrowserRouter>
   );

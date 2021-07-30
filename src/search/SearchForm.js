@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AutocompleteInput from './AutocompleteInput'
 import { useHistory } from "react-router-dom";
 import Alert from "../common/Alert";
+import SearchTermContext from "../context/SearchTermContext";
 
 
 function SearchForm(props) {
@@ -22,6 +23,7 @@ function SearchForm(props) {
     airport: true,
     page: 0
   });
+  const { search, setSearch } = useContext(SearchTermContext); 
  
    /** Handle form submit:
    *
@@ -39,6 +41,7 @@ function SearchForm(props) {
       if(returnDate) baseSearchApiObject.returnDate = returnDate;
       if(adult) baseSearchApiObject.adult = adult;
       if(children) baseSearchApiObject.children = children;
+      setSearch(baseSearchApiObject);
     }
   
     /** Update form data field */

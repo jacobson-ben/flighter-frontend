@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Route, Redirect } from "react-router-dom";
-import UserContext from "../auth/UserContext";
+import UserContext from "../context/UserContext";
 
 /** "Higher-Order Component" for private routes.
  *
