@@ -19,6 +19,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
   const [search, setSearch] = useState({})
+  const [flights, setFlights] = useState([]);
 
   // console.debug(
   //     "App",
@@ -103,7 +104,12 @@ function App() {
       <SearchTermContext.Provider value={{search, setSearch}}>
       <div className="App">
         <NavBar logout={logout}/>
-        <Routes login={login} signup={signup} />
+        <Routes 
+          login={login} 
+          signup={signup} 
+          flights={flights} 
+          setFlights={setFlights}
+        />
       </div>
       </SearchTermContext.Provider>
       </UserContext.Provider>

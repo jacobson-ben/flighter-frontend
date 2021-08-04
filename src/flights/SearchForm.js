@@ -15,7 +15,7 @@ const initialState = {
   nonStop: false,
 }
 
-function SearchForm(props) {
+function SearchForm({setFlights}) {
   const now = new Date();
   const [formData, setFormData] = useState(initialState);
   const { search, setSearch } = useContext(SearchTermContext); 
@@ -47,7 +47,7 @@ function SearchForm(props) {
       // api query.
       let response = await AmadeusApi.getFlightOffers(baseSearchApiObject);
       // reset to initial 
-      console.log(response)
+      setFlights(response.data.response.data)
       setFormData(initialState);
     }
     

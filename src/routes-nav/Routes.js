@@ -5,9 +5,9 @@ import LoginForm from "../auth/LoginForm";
 import SignupForm from "../auth/SignupForm";
 import ProfileForm from "../profiles/ProfileForm";
 import PrivateRoute from "./PrivateRoute";
-import SearchForm from "../search/SearchForm";
+import FlightSearch from "../flights/FlightSearch";
 
-function Routes({ login, signup }) {
+function Routes({ login, signup, flights, setFlights }) {
 
   return (
     <div>
@@ -29,7 +29,7 @@ function Routes({ login, signup }) {
         </PrivateRoute>
 
         <PrivateRoute path="/flights">
-          <SearchForm />
+          <FlightSearch flights={flights} setFlights={setFlights}/>
         </PrivateRoute>
 
       </Switch>
